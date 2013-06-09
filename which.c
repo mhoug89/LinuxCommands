@@ -42,21 +42,20 @@ int main(int argc, char** argv)
         // search for the file and print it out if it exists.
         if (argv[curIndex][0] == '/') {
             if (stat(argv[curIndex], &curStat) == 0) {
-	            if (S_ISREG(curStat.st_mode)) {
-	            	printf("%s\n", argv[curIndex]);
-	            }
-	        }
-	    }
-	    else if (argv[curIndex][0] == '.') {
-	        // prepend the relative path and "/" before checking
-	        getcwd(curFile, 2056);
+                if (S_ISREG(curStat.st_mode)) {
+                    printf("%s\n", argv[curIndex]);
+                }
+            }
+        }
+        else if (argv[curIndex][0] == '.') {
+            // prepend the relative path and "/" before checking
+            getcwd(curFile, 2056);
             strncat(curFile, "/", 1);
             strncat(curFile, argv[curIndex], strlen(argv[curIndex]));
-	        if (stat(curFile, &curStat) == 0) {
+            if (stat(curFile, &curStat) == 0) {
                 printf("%s\n", curFile);
-	        }
-	    }
-
+            }
+        }
         // doesn't have a prepended path, so search each folder in the PATH
         // variable, one at a time; stop at the first instance you find
         else {
@@ -72,7 +71,7 @@ int main(int argc, char** argv)
                 if (stat(curFile, &curStat) == 0) {
                     printf("%s\n", curFile);
                     break;
-    	        }
+                }
 
                 curFolder = strtok(NULL, ":");
             }
