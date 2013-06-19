@@ -6,12 +6,14 @@
 #include <unistd.h>
 #include <malloc.h>
 
+#define BUF_SZ 2056
+
 void printHelp();
 
 int main(int argc, char** argv)
 {
-    int curIndex, i;    // loop counters
-    char *path, *pathToSplit, *pathDelim, *curFolder, curFile[2056];
+    int curIndex;    // loop counter to traverse arguments
+    char *path, *pathToSplit, *pathDelim, *curFolder, curFile[BUF_SZ];
     struct stat curStat;
 
     // print a help section if the user only enters "which"
@@ -34,9 +36,9 @@ int main(int argc, char** argv)
     for (curIndex = 1; curIndex < argc; curIndex++) {
         // don't worry about clearing the pathToSplit buffer -- it is only
         // truncated after the next line
-        strncpy(pathToSplit, path, strlen(path));
+        strncpy(pathToSplit, path, strlen(path)+1);
         // clear out contents of old file name
-        memset(curFile, 0, strlen(curFile));
+        memset(curFile, 0, BUF_SZ);
 
         // if the user specifies an absolute or relative path,
         // search for the file and print it out if it exists.
@@ -49,7 +51,7 @@ int main(int argc, char** argv)
         }
         else if (argv[curIndex][0] == '.') {
             // prepend the relative path and "/" before checking
-            getcwd(curFile, 2056);
+            getcwd(curFile, BUF_SZ);
             strncat(curFile, "/", 1);
             strncat(curFile, argv[curIndex], strlen(argv[curIndex]));
             if (stat(curFile, &curStat) == 0) {
@@ -62,10 +64,10 @@ int main(int argc, char** argv)
             curFolder = strtok(pathToSplit, ":");
 
             while (curFolder != NULL) {
-                memset(curFile, 0, strlen(curFile));
+                memset(curFile, 0, BUF_SZ);
                 // curFile will become:
                 // [folder in PATH] + "/" + [argument passed to which]
-                strncpy(curFile, curFolder, strlen(curFolder));
+                strncpy(curFile, curFolder, strlen(curFolder)+1);
                 strncat(curFile, "/", 1);
                 strncat(curFile, argv[curIndex], strlen(argv[curIndex]));
                 if (stat(curFile, &curStat) == 0) {
