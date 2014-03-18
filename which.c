@@ -12,7 +12,7 @@ void print_help();
 
 int main(int argc, char** argv)
 {
-    int cur_index;    // loop counter to traverse arguments
+    int cur_index;
     char *path, *path_to_split, *path_delim, *cur_folder, cur_file[BUF_SZ];
     struct stat cur_stat;
 
@@ -75,13 +75,10 @@ int main(int argc, char** argv)
 
                 cur_folder = strtok(NULL, ":");
             }
-
         }
     }
-
     return 0;
 }
-
 
 void print_help() {
     printf("Help section goes here. No nifty flags can be used at the moment. \n");
