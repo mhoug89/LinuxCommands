@@ -72,7 +72,6 @@ int main(int argc, char** argv)
                     printf("%s\n", cur_file);
                     break;
                 }
-
                 cur_folder = strtok(NULL, ":");
             }
         }
