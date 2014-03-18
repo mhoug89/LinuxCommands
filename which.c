@@ -10,8 +10,7 @@
 
 void print_help();
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     int cur_index;
     char *path, *path_to_split, *path_delim, *cur_folder, cur_file[BUF_SZ];
     struct stat cur_stat;
