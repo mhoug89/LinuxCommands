@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     path = getenv("PATH");
     path_to_split = (char*)malloc(sizeof(char) * (strlen(path)+1));
     if (path == NULL) {
-        printf("You don't seem to have a PATH variable defined.\n");
+        fprintf(stderr, "You don't seem to have a PATH variable defined.\n");
         return 0;
     }
 
